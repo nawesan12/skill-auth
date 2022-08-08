@@ -4,6 +4,7 @@ import morgan from 'morgan'
 import mongoose from 'mongoose'
 import passport from 'passport'
 import session from 'express-session'
+import flash from 'connect-flash'
 
 import "./auth/local.js"
 
@@ -22,12 +23,19 @@ app.use(session({
     saveUninitialized: false
 }))
 
+app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.use('/api/v1', v1Routes)
+app.use((req, res, next) => {
+    app.locals.registerMessage = req.flash("registerMessage")
+    app.locals.loginMessage = req.flash("loginMessage")
+    next()
+})
 
-mongoose.connect('mongodb://localhost:27017/test', { useNewUrlParser: true })
+app.use('/', v1Routes)
+
+mongoose.connect('mongodb+srv://roberto12:hola2022@cluster0.tl6fgmm.mongodb.net/bolsa_de_gatos?retryWrites=true&w=majority', { useNewUrlParser: true })
     .then(() => {
         console.log('Connected to MongoDB')
     }).catch(err => {
