@@ -32,7 +32,7 @@ router
     })
 
 router.use((req, res, next) => {
-    isAuthenticated(req, res, next)
+    isLoggedIn(req, res, next)
     next()
 })
 
