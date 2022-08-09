@@ -14,8 +14,8 @@ router
     }))
 
     .get("/auth/register", (req, res, next) => {
-        if(signupMessage) {
-            res.send(signupMessage)
+        if(registerMessage) {
+            res.send(registerMessage)
         } else {
             res.send("Register page")
         }
